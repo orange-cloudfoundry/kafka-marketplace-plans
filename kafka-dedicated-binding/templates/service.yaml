@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "kafka-dedicated-binding.fullname" . }}
+  labels:
+    {{- include "kafka-dedicated-binding.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "kafka-dedicated-binding.selectorLabels" . | nindent 4 }}
